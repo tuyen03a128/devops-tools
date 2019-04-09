@@ -2,9 +2,6 @@
 # Exit on error
 set -e
 
-
-
-
 echo Install docker :: Begin
 if [ "$(uname)" == "Darwin" ]; then
     # Do something under Mac OS X platform
