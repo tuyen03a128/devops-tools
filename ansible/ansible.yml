@@ -1,0 +1,5 @@
+- hosts: localhost
+  roles:
+    - role: docker
+      sudo_user: root
+      app_user: tuyenntk

@@ -1,0 +1,11 @@
+[localhost]
+localhost
+
+[localhost:vars]
+user=tuyenntk
+
+[all:vars]
+ansible_ssh_user=tuyenntk
+
+[gcp-puppet-master]
+35.239.76.218 ansible_ssh_user=tuyenntk

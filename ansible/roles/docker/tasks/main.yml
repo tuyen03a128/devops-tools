@@ -1,0 +1,17 @@
+#- name: Install docker
+#  shell: "curl -sSL https://get.docker.com/ | sh"
+- stat: path=/usr/bin/docker
+  register: docker
+
+- name: Install docker
+  shell: "curl -sSL https://get.docker.com/ | sh"
+  sudo: yes
+  sudo_user: {{sudo_user}}
+  when: not docker.stat.exists
+
+- name: Add app user to docker group
+#  command: gpasswd -a {{app_user}} docker
+  user: name={{app_user}} group=docker
+  sudo: yes
+  sudo_user: {{sudo_user}}
+  when: not docker.stat.exists

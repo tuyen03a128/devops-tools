@@ -1,0 +1,27 @@
+- name: Proxy | Prepare tool dir
+  file: path={{proxy_dir}} state=directory owner={{app_user}} group={{group_user}}
+
+- name: Proxy | Copy files
+  copy: src=override dest={{proxy_dir}}
+
+- name: Proxy | Check if nginx is installed
+  shell: "docker ps -a|grep {{proxy_docker_name}}|awk '{ print $1}'"
+  register: container_id
+
+- name: debug
+  debug:
+    var: container_id
+
+- name: Proxy | Run the first time
+  command: "{{item}}"
+  with_items:
+    - "docker run -d --restart=always --name={{proxy_docker_name}} --log-opt max-size=100k -v {{proxy_dir}}/override:/override:ro -p 443:443 -p 80:80 -w /etc/nginx nginx bash /override/entry.sh"
+  when: container_id.stdout == ""
+
+- name: Otter Production Proxy | Start
+  command: "{{item}}"
+  with_items:
+    - "docker stop {{container_id.stdout}}"
+    - "docker rm -f {{container_id.stdout}}"
+    - "docker run -d --restart=always --name={{proxy_docker_name}} --log-opt max-size=100k -v {{proxy_dir}}/override:/override:ro -p 443:443 -p 80:80 -w /etc/nginx nginx bash /override/entry.sh"
+  when: container_id.stdout != ""

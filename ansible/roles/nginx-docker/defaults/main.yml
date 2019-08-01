@@ -1,0 +1,2 @@
+proxy_docker_name: proxy
+proxy_dir: /data/tool/proxy

@@ -1,0 +1,8 @@
+- hosts: localhost
+  roles:
+    - role: nginx-docker
+      sudo: yes
+      sudo_user: tuyenntk
+      app_user: tuyenntk
+      group_user: devops
+      sudo: yes
