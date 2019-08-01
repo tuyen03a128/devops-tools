@@ -8,4 +8,4 @@ user=tuyenntk
 ansible_ssh_user=tuyenntk
 
 [gcp-puppet-master]
-35.239.76.218 ansible_ssh_user=tuyenntk
+127.0.0.1 ansible_ssh_user=tuyenntk
